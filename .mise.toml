@@ -1,0 +1,7 @@
+[tools]
+tuist = "4.200.5"
+
+[env]
+# swift-navigation 2.x는 SPM traits를 쓰는데 Tuist가 default traits를 활성화하지 않는다.
+# 이 env var로 navigation의 모든 trait를 강제 활성화해야 TCA(navigationDestination 등)가 빌드된다.
+ENABLE_ALL_TRAITS = "1"

@@ -1,0 +1,7 @@
+# 에이전트 작업 문서
+adr/
+harness/
+superpowers/
+
+# OS
+.DS_Store

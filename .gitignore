@@ -1,0 +1,36 @@
+## Tuist — only sources & manifests are committed; everything generated is ignored.
+*.xcodeproj
+*.xcworkspace
+Derived/
+.build/
+# NOTE: Tuist/Package.resolved is intentionally committed (reproducible dependency resolution).
+
+## Xcode / build output
+DerivedData/
+.dd*/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+## Swift Package Manager
+.swiftpm/
+
+## mise — tool versions (.mise.toml) committed; personal overrides ignored.
+.mise.local.toml
+
+## Claude Code — shared config (settings.json, rules, hooks, commands, agents) committed;
+## personal/local settings ignored.
+.claude/settings.local.json
+
+## Agent working docs
+CONTEXT.md
+
+## macOS
+.DS_Store
