@@ -89,7 +89,7 @@ struct SettingsView: View {
                             store.send(store.authStatus == .approved ? .revokeTapped : .requestTapped)
                         } label: {
                             HStack {
-                                Text(store.authStatus == .approved ? "권한 해제" : "권한 허용")
+                                Text(permissionButtonTitle)
                                     .font(Typo.rowTitle)
                                     .foregroundStyle(Palette.accentBrand)
                                 Spacer()
@@ -119,10 +119,14 @@ struct SettingsView: View {
 
     private var statusText: String {
         switch store.authStatus {
-        case .approved: "승인됨"
-        case .denied: "거부됨"
-        case .notDetermined: "미설정"
+        case .approved: String(localized: "허용됨")
+        case .denied: String(localized: "거부됨")
+        case .notDetermined: String(localized: "미설정")
         }
+    }
+
+    private var permissionButtonTitle: LocalizedStringKey {
+        store.authStatus == .approved ? "권한 해제하기" : "권한 허용하기"
     }
 
     private var statusColor: Color {
@@ -140,7 +144,7 @@ struct SettingsView: View {
     }
 
     private func row<Trailing: View>(
-        _ title: String,
+        _ title: LocalizedStringKey,
         @ViewBuilder trailing: () -> Trailing
     ) -> some View {
         HStack {

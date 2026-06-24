@@ -14,15 +14,17 @@ final class FocusShieldConfiguration: ShieldConfigurationDataSource {
     private func focusConfiguration() -> ShieldConfiguration {
         let remaining = FocusSessionStore.remaining()
         let minutes = max(1, Int((remaining / 60).rounded(.up)))
-        let subtitle = remaining > 0 ? "남은 \(minutes)분" : "집중 세션이 곧 끝나요"
+        let subtitle = remaining > 0
+            ? String(localized: "\(minutes)분 남았어요")
+            : String(localized: "거의 다 왔어요")
 
         return ShieldConfiguration(
             backgroundBlurStyle: .systemUltraThinMaterialDark,
             backgroundColor: .black,
             icon: UIImage(systemName: "moon.zzz.fill"),
-            title: ShieldConfiguration.Label(text: "집중 중", color: .white),
+            title: ShieldConfiguration.Label(text: String(localized: "집중 중"), color: .white),
             subtitle: ShieldConfiguration.Label(text: subtitle, color: Self.brandOrange),
-            primaryButtonLabel: ShieldConfiguration.Label(text: "닫기", color: .black),
+            primaryButtonLabel: ShieldConfiguration.Label(text: String(localized: "닫기"), color: .black),
             primaryButtonBackgroundColor: Self.brandOrange
         )
     }

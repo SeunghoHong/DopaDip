@@ -65,18 +65,13 @@ struct PermissionView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer()
 
-                Text("집중을 시작하려면")
+                Text("집중을 시작해 볼까요?")
                     .font(Typo.largeTitle)
                     .foregroundStyle(Palette.textPrimary)
 
-                Text(
-                    """
-                    DopaDip은 Screen Time 권한으로 산만한 앱을 차단합니다.
-                    권한을 허용해야 시작할 수 있어요.
-                    """
-                )
-                .font(Typo.rowTitle)
-                .foregroundStyle(Palette.textSecondary)
+                Text("집중하는 동안 고른 앱을 차단하려면 Screen Time 권한이 필요해요.\n권한은 기기 안에서만 쓰여요.")
+                    .font(Typo.rowTitle)
+                    .foregroundStyle(Palette.textSecondary)
 
                 if let message = store.deniedMessage {
                     Text(message)
@@ -93,7 +88,7 @@ struct PermissionView: View {
                         if store.isRequesting {
                             ProgressView().tint(.black)
                         } else {
-                            Text("권한 허용")
+                            Text("권한 허용하기")
                                 .font(Typo.buttonLabel)
                         }
                     }

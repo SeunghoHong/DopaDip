@@ -34,3 +34,12 @@ CONTEXT.md
 
 ## macOS
 .DS_Store
+
+## understand-anything (generated knowledge graph — local artifact)
+.understand-anything/
+
+## Derived data log
+.derived-data-log-*
+
+## SourceKit-LSP build server config (machine-specific paths)
+buildServer.json

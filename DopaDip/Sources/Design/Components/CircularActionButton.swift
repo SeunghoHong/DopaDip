@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Clock 스타일 원형 액션 버튼(지름 76). Start=그린, 포기/취소=그레이.
 struct CircularActionButton: View {
-    let title: String
+    let title: LocalizedStringKey
     var fill: Color = Palette.actionStart
     var labelColor: Color = .black
     var isEnabled: Bool = true

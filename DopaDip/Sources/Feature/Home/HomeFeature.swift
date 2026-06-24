@@ -194,7 +194,7 @@ struct HomeView: View {
             store.send(.selectAppsTapped)
         } label: {
             HStack {
-                Text(store.blockedCount > 0 ? "차단 앱 \(store.blockedCount)개" : "차단할 앱 선택")
+                Text(blockedAppsTitle)
                     .font(Typo.rowTitle)
                     .foregroundStyle(store.blockedCount > 0 ? Palette.textPrimary : Palette.textSecondary)
                 Spacer()
@@ -234,7 +234,7 @@ struct HomeView: View {
             Spacer()
 
             CircularActionButton(
-                title: "포기",
+                title: "그만하기",
                 fill: Palette.surfaceRaised,
                 labelColor: Palette.textPrimary
             ) {
@@ -244,6 +244,10 @@ struct HomeView: View {
             Spacer().frame(height: 8)
         }
         .padding(24)
+    }
+
+    private var blockedAppsTitle: LocalizedStringKey {
+        store.blockedCount > 0 ? "차단 앱 \(store.blockedCount)개" : "차단할 앱 고르기"
     }
 
     private func formatRemaining(_ interval: TimeInterval) -> String {

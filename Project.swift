@@ -29,6 +29,7 @@ func extensionInfoPlist(pointIdentifier: String, principalClass: String, display
 let project = Project(
     name: "DopaDip",
     organizationName: "DopaDip",
+    options: .options(defaultKnownRegions: ["en", "ko"], developmentRegion: "ko"),
     settings: .settings(base: baseSettings),
     targets: [
         .target(
@@ -42,6 +43,7 @@ let project = Project(
                 "UILaunchScreen": .dictionary([:]),
             ]),
             sources: ["DopaDip/Sources/**"],
+            resources: ["DopaDip/Resources/**"],
             entitlements: .dictionary(sharedEntitlements),
             dependencies: [
                 .target(name: "DopaDipKit"),
@@ -89,6 +91,7 @@ let project = Project(
                 displayName: "DopaDip Shield"
             ),
             sources: ["ShieldConfigurationExtension/Sources/**"],
+            resources: ["ShieldConfigurationExtension/Resources/**"],
             entitlements: .dictionary(sharedEntitlements),
             dependencies: [
                 .target(name: "DopaDipKit"),
