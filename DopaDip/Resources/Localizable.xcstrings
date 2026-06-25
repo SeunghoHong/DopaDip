@@ -1,55 +1,155 @@
 {
   "sourceLanguage" : "ko",
-  "version" : "1.0",
   "strings" : {
     "Screen Time 권한" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Screen Time access" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Screen Time access"
+          }
+        }
       }
     },
     "거부됨" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Denied" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denied"
+          }
+        }
       }
     },
     "거의 다 왔어요" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Almost there" } }
-      }
-    },
-    "그만하기" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Almost there"
+          }
+        }
       }
     },
     "권한 해제하기" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Revoke access" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revoke access"
+          }
+        }
       }
     },
     "권한 허용하기" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Allow access" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow access"
+          }
+        }
+      }
+    },
+    "그만하기" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        }
       }
     },
     "미설정" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Not set" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not set"
+          }
+        }
       }
     },
     "버전" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Version" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
       }
     },
     "설정" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
       }
     },
     "시작" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        }
+      }
+    },
+    "완료" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "집중" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focus"
+          }
+        }
+      }
+    },
+    "집중 중" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focusing"
+          }
+        }
+      }
+    },
+    "집중을 시작해 볼까요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready to focus?"
+          }
+        }
+      }
+    },
+    "집중하는 동안 고른 앱을 차단하려면 Screen Time 권한이 필요해요.\n권한은 기기 안에서만 쓰여요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To block your chosen apps during a focus session, DopaDip needs Screen Time access.\nIt stays on your device."
+          }
+        }
       }
     },
     "차단 앱 %lld개" : {
@@ -57,42 +157,53 @@
         "en" : {
           "variations" : {
             "plural" : {
-              "one" : { "stringUnit" : { "state" : "translated", "value" : "%lld app blocked" } },
-              "other" : { "stringUnit" : { "state" : "translated", "value" : "%lld apps blocked" } }
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld app blocked"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld apps blocked"
+                }
+              }
             }
+          }
+        }
+      }
+    },
+    "차단할 앱" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apps to block"
           }
         }
       }
     },
     "차단할 앱 고르기" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose apps to block" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose apps to block"
+          }
+        }
       }
     },
     "허용됨" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Allowed" } }
-      }
-    },
-    "집중" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Focus" } }
-      }
-    },
-    "집중 중" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Focusing" } }
-      }
-    },
-    "집중을 시작해 볼까요?" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Ready to focus?" } }
-      }
-    },
-    "집중하는 동안 고른 앱을 차단하려면 Screen Time 권한이 필요해요.\n권한은 기기 안에서만 쓰여요." : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "To block your chosen apps during a focus session, DopaDip needs Screen Time access.\nIt stays on your device." } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allowed"
+          }
+        }
       }
     }
-  }
+  },
+  "version" : "1.0"
 }
