@@ -156,8 +156,17 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $store.isPickerPresented) {
-            FamilyActivityPicker(selection: $store.selection)
-                .preferredColorScheme(.dark)
+            NavigationStack {
+                FamilyActivityPicker(selection: $store.selection)
+                    .navigationTitle("차단할 앱")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("완료") { store.isPickerPresented = false }
+                        }
+                    }
+            }
+            .preferredColorScheme(.dark)
         }
         .task { store.send(.onAppear) }
     }

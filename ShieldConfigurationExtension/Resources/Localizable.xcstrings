@@ -1,26 +1,46 @@
 {
   "sourceLanguage" : "ko",
-  "version" : "1.0",
   "strings" : {
     "%lld분 남았어요" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld min left" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min left"
+          }
+        }
       }
     },
     "거의 다 왔어요" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Almost there" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Almost there"
+          }
+        }
       }
     },
     "닫기" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
       }
     },
     "집중 중" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Focusing" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focusing"
+          }
+        }
       }
     }
-  }
+  },
+  "version" : "1.0"
 }
