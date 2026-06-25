@@ -1,6 +1,4 @@
 import ComposableArchitecture
-import FamilyControls
-import SwiftUI
 
 /// 루트 리듀서 — Screen Time 권한 상태로 권한 게이트 ↔ 메인 탭을 라우팅한다.
 @Reducer
@@ -53,23 +51,5 @@ struct AppFeature {
             if state.permission == nil { state.permission = .init() }
             state.main = nil
         }
-    }
-}
-
-struct AppView: View {
-    @Bindable var store: StoreOf<AppFeature>
-
-    var body: some View {
-        Group {
-            if let permissionStore = store.scope(state: \.permission, action: \.permission) {
-                PermissionView(store: permissionStore)
-            } else if let mainStore = store.scope(state: \.main, action: \.main) {
-                MainTabView(store: mainStore)
-            } else {
-                Palette.canvas.ignoresSafeArea()
-            }
-        }
-        .preferredColorScheme(.dark)
-        .task { store.send(.task) }
     }
 }
