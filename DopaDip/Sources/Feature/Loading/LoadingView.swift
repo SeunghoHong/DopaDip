@@ -15,10 +15,14 @@ struct LoadingView: View {
 
             LottieView(animation: animation)
                 .playing(loopMode: .playOnce)
-                .animationDidFinish { _ in finish() }
         }
-        // 번들에 애니메이션이 없으면(개발 중 미배치) 멈추지 않고 즉시 통과시킨다.
-        .task { if animation == nil { finish() } }
+        // 애니메이션을 한 번 재생할 동안 보여준 뒤 라우팅한다. 번들에 없으면(개발 중 미배치) 즉시 통과.
+        .task {
+            if let duration = animation?.duration {
+                try? await Task.sleep(for: .seconds(duration))
+            }
+            finish()
+        }
     }
 
     private func finish() {
