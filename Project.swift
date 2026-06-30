@@ -1,12 +1,15 @@
 import ProjectDescription
 
-let appBundleID = "com.dopadip.app"
+let appBundleID = "com.spoonlabs.beauai" // 임시 — 실기기 테스트용 (원래 com.dopadip.app)
 let appGroup = "group.com.dopadip"
 let deploymentTargets: DeploymentTargets = .iOS("17.0")
 
 let baseSettings: SettingsDictionary = [
     "SWIFT_VERSION": "6.0",
     "CODE_SIGN_STYLE": "Automatic",
+    "DEVELOPMENT_TEAM": "323VSWGR34", // 임시 — Spoonlabs., Inc (실기기 테스트용)
+    "MARKETING_VERSION": "0.0.1",
+    "CURRENT_PROJECT_VERSION": "1",
 ]
 
 // Family Controls + App Group — app과 두 익스텐션이 공유한다.
@@ -19,6 +22,8 @@ func extensionInfoPlist(pointIdentifier: String, principalClass: String, display
     -> InfoPlist {
     .extendingDefault(with: [
         "CFBundleDisplayName": .string(displayName),
+        "CFBundleShortVersionString": .string("0.0.1"),
+        "CFBundleVersion": .string("1"),
         "NSExtension": .dictionary([
             "NSExtensionPointIdentifier": .string(pointIdentifier),
             "NSExtensionPrincipalClass": .string("$(PRODUCT_MODULE_NAME).\(principalClass)"),
@@ -40,6 +45,8 @@ let project = Project(
             deploymentTargets: deploymentTargets,
             infoPlist: .extendingDefault(with: [
                 "CFBundleDisplayName": .string("DopaDip"),
+                "CFBundleShortVersionString": .string("0.0.1"),
+                "CFBundleVersion": .string("1"),
                 "UILaunchScreen": .dictionary([:]),
             ]),
             sources: ["DopaDip/Sources/**"],
@@ -50,7 +57,9 @@ let project = Project(
                 .target(name: "DeviceActivityMonitorExtension"),
                 .target(name: "ShieldConfigurationExtension"),
                 .external(name: "ComposableArchitecture"),
-            ]
+                .external(name: "Lottie"),
+            ],
+            settings: .settings(base: ["ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon"])
         ),
         .target(
             name: "DopaDipKit",
