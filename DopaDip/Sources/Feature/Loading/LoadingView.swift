@@ -1,35 +1,29 @@
 import Lottie
 import SwiftUI
 
-/// 첫 로딩 화면. 가운데 워드마크를 보여주고, 끝나면 `onFinished`로 권한 라우팅을 트리거한다.
-/// loading.json(Lottie)은 일단 숨겨두고 재생 길이만 로딩 유예로 쓴다 — 그 시간이 콜드런치
-/// 권한 복원(race)을 흡수한다.
+/// 첫 로딩 화면. 워드마크 Lottie(글자 bounce)를 1회 재생하고, 끝나면 `onFinished`로 권한 라우팅을
+/// 트리거한다. 재생시간이 곧 콜드런치 권한 복원(race)을 흡수하는 유예 역할을 한다.
 struct LoadingView: View {
     let onFinished: () -> Void
 
-    private let animation = LottieAnimation.named("loading")
+    private let animation = LottieAnimation.named("wordmark")
     @State private var didFinish = false
 
     var body: some View {
         ZStack {
             Palette.canvas.ignoresSafeArea()
 
-            wordmark
+            LottieView(animation: animation)
+                .playing(loopMode: .playOnce)
+                .frame(width: 300, height: 116)
         }
-        // loading.json은 일단 표시하지 않고(hidden) 재생 길이만 로딩 유예로 쓴다. 끝나면 라우팅.
+        // 워드마크를 한 번 재생할 동안 보여준 뒤 라우팅한다. 번들에 없으면(개발 중 미배치) 즉시 통과.
         .task {
             if let duration = animation?.duration {
                 try? await Task.sleep(for: .seconds(duration))
             }
             finish()
         }
-    }
-
-    private var wordmark: some View {
-        Image("dopadip-wordmark")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 240)
     }
 
     private func finish() {
