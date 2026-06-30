@@ -3,8 +3,7 @@ import SwiftUI
 
 /// 첫 로딩 화면. 가운데 워드마크를 보여주고, 끝나면 `onFinished`로 권한 라우팅을 트리거한다.
 /// loading.json(Lottie)은 일단 숨겨두고 재생 길이만 로딩 유예로 쓴다 — 그 시간이 콜드런치
-/// 권한 복원(race)을 흡수한다. (워드마크 SVG는 `<text>`라 asset catalog가 렌더 못 해 네이티브
-/// Text로 재현한다.)
+/// 권한 복원(race)을 흡수한다.
 struct LoadingView: View {
     let onFinished: () -> Void
 
@@ -26,12 +25,11 @@ struct LoadingView: View {
         }
     }
 
-    // dopadip-wordmark.svg 재현: "dopa"는 흰색, "dip"은 브랜드 오렌지. SF 시스템폰트 Light.
     private var wordmark: some View {
-        (Text("dopa").foregroundColor(Palette.textPrimary)
-            + Text("dip").foregroundColor(Palette.accentBrand))
-            .font(.system(size: 48, weight: .light))
-            .tracking(-1)
+        Image("dopadip-wordmark")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 240)
     }
 
     private func finish() {
