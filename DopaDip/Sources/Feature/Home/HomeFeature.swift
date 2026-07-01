@@ -15,6 +15,8 @@ struct HomeFeature {
         var duration: TimeInterval = 25 * 60
         var isPickerPresented = false
 
+        /// 진행 중 세션의 시작 시각. 진행률(경과/전체) 계산에 필요.
+        var sessionStartDate: Date?
         /// 진행 중 세션의 종료 시각. nil이면 idle.
         var sessionEndDate: Date?
         /// 카운트다운 계산용 현재 시각(타이머가 갱신).
@@ -38,18 +40,18 @@ struct HomeFeature {
             return max(0, end.timeIntervalSince(now))
         }
 
-        /// 진행률 0~1 (FocusRing용).
+        /// 진행률 0~1 (FocusRing용). 전체 길이는 start~end 실제 간격으로 — 복원 시에도 정확.
         var progress: Double {
-            guard let end = sessionEndDate, duration > 0 else { return 0 }
-            let elapsed = duration - max(0, end.timeIntervalSince(now))
-            return min(1, max(0, elapsed / duration))
+            guard let start = sessionStartDate, let end = sessionEndDate, end > start else { return 0 }
+            let total = end.timeIntervalSince(start)
+            return min(1, max(0, now.timeIntervalSince(start) / total))
         }
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case onAppear
-        case restore(endDate: Date?)
+        case restore(startDate: Date?, endDate: Date?)
         case selectAppsTapped
         case startTapped
         case giveUpTapped
@@ -72,18 +74,20 @@ struct HomeFeature {
                 state.now = date.now
                 // 백그라운드/재실행 중 살아있는 세션을 App Group에서 복원(effect 경계).
                 return .run { send in
-                    await send(.restore(endDate: focusSession.loadEndDate()))
+                    await send(.restore(startDate: focusSession.loadStartDate(), endDate: focusSession.loadEndDate()))
                 }
 
-            case let .restore(endDate):
+            case let .restore(startDate, endDate):
                 let current = date.now
                 state.now = current
-                if let end = endDate, end > current {
+                if let start = startDate, let end = endDate, end > current {
+                    state.sessionStartDate = start
                     state.sessionEndDate = end
                     return startTimer()
                 }
+                state.sessionStartDate = nil
                 state.sessionEndDate = nil
-                return .run { _ in focusSession.clearEndDate() }
+                return .run { _ in focusSession.clearSession() }
 
             case .selectAppsTapped:
                 state.isPickerPresented = true
@@ -94,13 +98,14 @@ struct HomeFeature {
                 let start = date.now
                 let end = start.addingTimeInterval(state.duration)
                 state.now = start
+                state.sessionStartDate = start
                 state.sessionEndDate = end
                 let selectionData = (try? JSONEncoder().encode(state.selection)) ?? Data()
                 return .merge(
                     .run { [duration = state.duration] _ in
                         appShield.apply(selectionData)
                         _ = deviceActivity.start(start, duration)
-                        focusSession.saveEndDate(end)
+                        focusSession.saveSession(start, end)
                     },
                     startTimer()
                 )
@@ -131,13 +136,14 @@ struct HomeFeature {
     }
 
     private func endSession(_ state: inout State) -> Effect<Action> {
+        state.sessionStartDate = nil
         state.sessionEndDate = nil
         return .merge(
             .cancel(id: CancelID.timer),
             .run { _ in
                 appShield.clear()
                 deviceActivity.stop()
-                focusSession.clearEndDate()
+                focusSession.clearSession()
             }
         )
     }

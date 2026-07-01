@@ -12,8 +12,13 @@ final class HomeFeatureTests: XCTestCase {
         DeviceActivityClient(start: { _, _ in true }, stop: {})
     }
 
-    private func session(loadEndDate: @escaping @Sendable () -> Date?) -> FocusSessionClient {
-        FocusSessionClient(loadEndDate: loadEndDate, saveEndDate: { _ in }, clearEndDate: {})
+    private func session(start: Date? = nil, end: Date? = nil) -> FocusSessionClient {
+        FocusSessionClient(
+            loadStartDate: { start },
+            loadEndDate: { end },
+            saveSession: { _, _ in },
+            clearSession: {}
+        )
     }
 
     /// 차단 앱을 안 골랐으면 시작이 무시된다(canStart false).
@@ -35,7 +40,7 @@ final class HomeFeatureTests: XCTestCase {
         } withDependencies: {
             $0.appShield = noopShield()
             $0.deviceActivity = noopActivity()
-            $0.focusSession = session(loadEndDate: { nil })
+            $0.focusSession = session()
         }
 
         await store.send(.giveUpTapped) {
@@ -53,7 +58,7 @@ final class HomeFeatureTests: XCTestCase {
         } withDependencies: {
             $0.appShield = noopShield()
             $0.deviceActivity = noopActivity()
-            $0.focusSession = session(loadEndDate: { nil })
+            $0.focusSession = session()
         }
 
         await store.send(.timerTicked(end)) {
@@ -85,7 +90,7 @@ final class HomeFeatureTests: XCTestCase {
             HomeFeature()
         } withDependencies: {
             $0.date = .constant(now)
-            $0.focusSession = session(loadEndDate: { nil })
+            $0.focusSession = session()
         }
 
         await store.send(.onAppear) { $0.now = now }
@@ -96,6 +101,7 @@ final class HomeFeatureTests: XCTestCase {
     @MainActor
     func testRestoreActiveSession() async {
         let now = Date(timeIntervalSinceReferenceDate: 1000)
+        let start = now.addingTimeInterval(-300)
         let end = now.addingTimeInterval(600)
         let store = TestStore(initialState: HomeFeature.State()) {
             HomeFeature()
@@ -104,16 +110,49 @@ final class HomeFeatureTests: XCTestCase {
             $0.continuousClock = TestClock()
             $0.appShield = noopShield()
             $0.deviceActivity = noopActivity()
-            $0.focusSession = session(loadEndDate: { end })
+            $0.focusSession = session(start: start, end: end)
         }
 
         await store.send(.onAppear) { $0.now = now }
         await store.receive(\.restore) {
             $0.now = now
+            $0.sessionStartDate = start
             $0.sessionEndDate = end
         }
         // 복원이 타이머를 시작했으므로 정리한다.
         await store.send(.giveUpTapped) {
+            $0.sessionStartDate = nil
+            $0.sessionEndDate = nil
+        }
+    }
+
+    /// 복원 시 진행률은 실제 start~end 간격 기준 — 기본 duration(25분)이 아니라.
+    /// (라벨은 맞고 링만 어긋나던 버그 회귀 방지: 600초 세션 절반 경과 → 0.5)
+    @MainActor
+    func testProgressAfterRestoreUsesActualSpan() async {
+        let now = Date(timeIntervalSinceReferenceDate: 1000)
+        let start = now.addingTimeInterval(-300)
+        let end = now.addingTimeInterval(300)
+        let store = TestStore(initialState: HomeFeature.State()) {
+            HomeFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = TestClock()
+            $0.appShield = noopShield()
+            $0.deviceActivity = noopActivity()
+            $0.focusSession = session(start: start, end: end)
+        }
+
+        await store.send(.onAppear) { $0.now = now }
+        await store.receive(\.restore) {
+            $0.now = now
+            $0.sessionStartDate = start
+            $0.sessionEndDate = end
+        }
+        XCTAssertEqual(store.state.progress, 0.5, accuracy: 0.001)
+
+        await store.send(.giveUpTapped) {
+            $0.sessionStartDate = nil
             $0.sessionEndDate = nil
         }
     }

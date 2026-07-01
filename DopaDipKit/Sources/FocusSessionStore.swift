@@ -6,9 +6,27 @@ import Foundation
 public enum FocusSessionStore {
     /// App Group UserDefaults 키. 앱의 @Shared와 반드시 일치시킨다.
     public static let endDateKey = "focusSessionEndDate"
+    /// 세션 시작 시각 키. 진행률(경과/전체) 복원에 필요 — endDate만으론 전체 길이를 알 수 없다.
+    public static let startDateKey = "focusSessionStartDate"
 
     private static var defaults: UserDefaults? {
         UserDefaults(suiteName: AppGroup.identifier)
+    }
+
+    /// 세션 시작 시각. 진행 중이 아니면 nil.
+    public static var startDate: Date? {
+        get {
+            guard let raw = defaults?.object(forKey: startDateKey) as? Double else { return nil }
+            return Date(timeIntervalSinceReferenceDate: raw)
+        }
+        set {
+            guard let defaults else { return }
+            if let newValue {
+                defaults.set(newValue.timeIntervalSinceReferenceDate, forKey: startDateKey)
+            } else {
+                defaults.removeObject(forKey: startDateKey)
+            }
+        }
     }
 
     /// 세션 종료 시각. 진행 중이 아니면 nil. (Double로 저장 — @Shared·익스텐션 양쪽 호환)
