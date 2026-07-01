@@ -11,7 +11,7 @@ struct AppView: View {
             } else if let mainStore = store.scope(state: \.main, action: \.main) {
                 MainTabView(store: mainStore)
             } else {
-                Palette.canvas.ignoresSafeArea()
+                LoadingView { store.send(.loadingFinished) }
             }
         }
         .preferredColorScheme(.dark)

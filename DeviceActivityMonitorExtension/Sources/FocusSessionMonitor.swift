@@ -8,6 +8,7 @@ final class FocusSessionMonitor: DeviceActivityMonitor {
         super.intervalDidEnd(for: activity)
         guard activity == .focusSession else { return }
         FocusShield.clear()
+        FocusSessionStore.startDate = nil
         FocusSessionStore.endDate = nil
     }
 }
